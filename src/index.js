@@ -1,17 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, { Component } from './my-react'
+import ReactDOM from './my-react-dom'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+function FuncComp(props) {
+    return <h2>hi {props.name}</h2>
+}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+class ClassComp extends Component {
+    render() {
+        return <h2>hi {this.props.name}</h2>
+    }
+}
+
+// babel解析jsx代码时会转换成执行Rect.createElement函数
+// jsx转换查看：https://react.docschina.org/
+const jsx = (
+    <div id="demo">
+        <h1>Hello World!</h1>
+        <FuncComp name="函数组件" />
+        <ClassComp name="类组件" />
+    </div>
+)
+
+ReactDOM.render(jsx, document.getElementById('root'))
