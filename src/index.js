@@ -11,13 +11,26 @@ class ClassComp extends Component {
     }
 }
 
+const users = [{
+    name: 'tom',
+    age: 20
+}, {
+    name: 'jerry',
+    age: 20
+}]
+
 // babel解析jsx代码时会转换成执行Rect.createElement函数
 // jsx转换查看：https://react.docschina.org/
 const jsx = (
-    <div id="demo">
-        <h1>Hello World!</h1>
+    <div id="demo" onClick={() => { console.log('触发点击事件') }}>
+        <h1 style={{ color: 'red' }}>Hello World!</h1>
         <FuncComp name="函数组件" />
         <ClassComp name="类组件" />
+        <ul>
+            {users.map(user => (
+                <li key={user.name}>{user.name},{user.age}</li>
+            ))}
+        </ul>
     </div>
 )
 

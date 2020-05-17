@@ -61,6 +61,14 @@ function createElement(vNode) {
             node.setAttribute('class', rest[k])
         } else if (k === 'htmlFor') {
             node.setAttribute('for', rest[k])
+        } else if (k === 'style' && typeof rest[k] === 'object') {
+            const style = Object.keys(rest[k]).map(s =>
+                s + ':' + rest[k][s]
+            ).join(';')
+            node.setAttribute("style", style)
+        } else if (k.startsWith('on')) {
+            const event = k.toLowerCase();
+            node[event] = rest[k]
         } else {
             node.setAttribute(k, rest[k])
         }
@@ -68,7 +76,11 @@ function createElement(vNode) {
 
     // 递归子元素
     children.forEach(c => {
-        node.appendChild(initVNode(c))
+        if (Array.isArray(c)) {
+            c.forEach(n => node.appendChild(initVNode(n)))
+        }else{
+            node.appendChild(initVNode(c))
+        }
     })
 
     return node
